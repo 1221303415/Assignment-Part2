@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.Iterator;
 
 /**
  * The Main class serves as the entry point of the program and contains various methods for user authentication,
@@ -147,15 +148,17 @@ public class Main {
                 return ("Error: Student " + student.getId() + " has not acquired the minimum required credit hours");
             }
         }
-        
+    
         for (Student student : Main.listStudents) {
-            for (Course course : student.getCurrentCourses()) {
+            Iterator<Course> iterator = student.getCurrentCourses().iterator();
+            while (iterator.hasNext()) {
+                Course course = iterator.next();
                 student.getTakenCourses().add(course);
-                student.dropCourse(course);
+                iterator.remove();
             }
             student.setCredit(0);
         }
-
+    
         trimester.addCount();
         return "Success";
     }
