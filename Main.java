@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * The Main class serves as the entry point of the program and contains various methods for user authentication,
@@ -13,6 +14,7 @@ public class Main {
     static ArrayList<Lecturer> listLecturers = FileIO.lecturerReader();
     static ArrayList<Student> listStudents = FileIO.studentReader();
     static ArrayList<Course> listCourses = FileIO.courseReader();
+    static Trimester trimester = new Trimester();
 
     /**
      * The main method of the program.
@@ -94,7 +96,7 @@ public class Main {
      * @param preReq The list of prerequisite course codes.
      * @return True if course creation is successful, false otherwise.
      */
-    public static boolean createCourse(String code, int credit, int preCredit, ArrayList<String> preReq) {
+    public static boolean createCourse(String code, int credit, int preCredit, Set<String> preReq) {
         for (Course course : listCourses) {
             if (course.getCode().equals(code)) {
                 return false;
@@ -135,5 +137,26 @@ public class Main {
         }
 
         return true;
+    }
+
+
+    public static String nextTrimester() {
+
+        for (Student student : Main.listStudents) {
+            if (student.getCurrentCredit() < trimester.getMinCredit()) {
+                return ("Error: Student " + student.getId() + " has not acquired the minimum required credit hours");
+            }
+        }
+        
+        for (Student student : Main.listStudents) {
+            for (Course course : student.getCurrentCourses()) {
+                student.getTakenCourses().add(course);
+                student.dropCourse(course);
+            }
+            student.setCredit(0);
+        }
+
+        trimester.addCount();
+        return "Success";
     }
 }

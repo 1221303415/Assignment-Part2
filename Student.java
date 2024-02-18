@@ -70,13 +70,17 @@ public class Student extends User {
         this.currentCredit += courseCredit;
     }
 
+    public void setCredit(int courseCredit) {
+        this.currentCredit = courseCredit;
+    }
+
     /**
      * Generates a string representation of the student object.
      * @return The string representation of the student object.
      */
     @Override
     public String toString() {
-        return "\nID: " + getId() + " Name: " + getPassword() + " Course: " + currentCourses;
+        return "ID: " + getId() + " Name: " + getName();
     }
 }
 

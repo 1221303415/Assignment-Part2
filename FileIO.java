@@ -1,8 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class FileIO {
     public static ArrayList<User> adminReader() {
@@ -73,7 +73,7 @@ public class FileIO {
                     System.out.println("Invalid credit: " + e.getMessage());
                 }
 
-                ArrayList<String> preReq = new ArrayList<String>();
+                HashSet<String> preReq = new HashSet<String>();
                 if (parts.length > 2) {
                     try {
                         preCredits = Integer.parseInt(parts[2].trim());
