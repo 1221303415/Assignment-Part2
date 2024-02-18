@@ -197,7 +197,7 @@ public class GUI extends Application {
             if (idField.getText().isBlank() || nameField.getText().isBlank() || usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
                 showPopup(AlertType.ERROR, "Please fill in all fields");
             } else {
-                Integer id = null;
+                int id = Integer.parseInt(idField.getText().trim());
                 String name = nameField.getText().trim();
                 String username = usernameField.getText().trim();
                 String password = passwordField.getText().trim();
@@ -214,6 +214,7 @@ public class GUI extends Application {
                     showPopup(AlertType.ERROR, "Id need to be int");
                 }
 
+                Admin.createStudent(id, name, username, password);
                 idField.clear();
                 nameField.clear();
                 usernameField.clear();
@@ -291,6 +292,9 @@ public class GUI extends Application {
                 } catch (NumberFormatException ex) {
                     showPopup(AlertType.ERROR, "Id need to be int");
                 }
+                
+                Admin.createLecturer(id, name, username, course, password);
+
 
                 idField.clear();
                 nameField.clear();
