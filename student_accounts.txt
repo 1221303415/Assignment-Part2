@@ -1,0 +1,8 @@
+1,c,c,c
+123456789, Abdul Hanim, student123, 123456
+1211104378, Adam Daniel, student333, 123456
+1211103458, weriz, student570, 123456
+1211133445, Sero, student107, 123456
+125556789, sure, student098, 123456
+1211134215, Potu, student071, 123456
+1001123490, Wetu, student295, 123456
