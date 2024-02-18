@@ -4,9 +4,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * Utility class for reading data from files.
+ */
 public class FileIO {
+
+    /**
+     * Reads administrator accounts from a file and returns a list of users.
+     *
+     * @return An ArrayList containing User objects representing administrators.
+     */
     public static ArrayList<User> adminReader() {
-        ArrayList<User> listUsers = new ArrayList<User>();
+        ArrayList<User> listUsers = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("admin_accounts.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -19,8 +28,13 @@ public class FileIO {
         return listUsers;
     }
 
+    /**
+     * Reads lecturer accounts from a file and returns a list of lecturers.
+     *
+     * @return An ArrayList containing Lecturer objects representing lecturers.
+     */
     public static ArrayList<Lecturer> lecturerReader() {
-        ArrayList<Lecturer> listLecturers = new ArrayList<Lecturer>();
+        ArrayList<Lecturer> listLecturers = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("lecturer_accounts.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -43,8 +57,13 @@ public class FileIO {
         return listLecturers;
     }
 
+    /**
+     * Reads student accounts from a file and returns a list of students.
+     *
+     * @return An ArrayList containing Student objects representing students.
+     */
     public static ArrayList<Student> studentReader() {
-        ArrayList<Student> listStudents = new ArrayList<Student>();
+        ArrayList<Student> listStudents = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("student_accounts.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -56,9 +75,14 @@ public class FileIO {
         }
         return listStudents;
     }
-    
+
+    /**
+     * Reads course information from a file and returns a list of courses.
+     *
+     * @return An ArrayList containing Course objects representing courses.
+     */
     public static ArrayList<Course> courseReader() {
-        ArrayList<Course> listCourses = new ArrayList<Course>();
+        ArrayList<Course> listCourses = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("courses.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -68,17 +92,15 @@ public class FileIO {
                 int preCredits = 0;
                 try {
                     credit = Integer.parseInt(parts[1].trim());
-                }
-                catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     System.out.println("Invalid credit: " + e.getMessage());
                 }
 
-                HashSet<String> preReq = new HashSet<String>();
+                HashSet<String> preReq = new HashSet<>();
                 if (parts.length > 2) {
                     try {
                         preCredits = Integer.parseInt(parts[2].trim());
-                    }
-                    catch (NumberFormatException e) {
+                    } catch (NumberFormatException e) {
                         System.out.println("Invalid pre h: " + e.getMessage());
                     }
                     for (int i = 3; i < parts.length; i++) {
@@ -92,10 +114,12 @@ public class FileIO {
         }
         return listCourses;
     }
-    
 
-
-
+    /**
+     * Main method for testing the file reading functionalities.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         System.out.println(courseReader());
     }

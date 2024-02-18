@@ -207,6 +207,7 @@ public class GUI extends Application {
 
                     if (Main.createUser(id, name, username, password, "Student")) {
                         showPopup(AlertType.INFORMATION, "Student Created");
+                        Admin.createStudent(id, name, username, password);
                     } else {
                         showPopup(AlertType.ERROR, "Id already taken");
                     }
@@ -214,7 +215,6 @@ public class GUI extends Application {
                     showPopup(AlertType.ERROR, "Id need to be int");
                 }
 
-                Admin.createStudent(id, name, username, password);
                 idField.clear();
                 nameField.clear();
                 usernameField.clear();
@@ -286,14 +286,13 @@ public class GUI extends Application {
                     if (Main.createUser(id, name, username, password, "Lecturer")) {
                         Main.listLecturers.getLast().addCourse(course);
                         showPopup(AlertType.INFORMATION, "Lecturer Created");
+                        Admin.createLecturer(id, name, username, course, password);
                     } else {
                         showPopup(AlertType.ERROR, "Id already taken");
                     }
                 } catch (NumberFormatException ex) {
                     showPopup(AlertType.ERROR, "Id need to be int");
                 }
-                
-                Admin.createLecturer(id, name, username, course, password);
 
 
                 idField.clear();
@@ -363,8 +362,23 @@ public class GUI extends Application {
                 Course preReq1 = preReqCombo1.getSelectionModel().getSelectedItem();
                 Course preReq2 = preReqCombo2.getSelectionModel().getSelectedItem();
                 Course preReq3 = preReqCombo3.getSelectionModel().getSelectedItem();
+                
+                // Check if prerequisites are selected properly
+                if (preReq1 != null && preReq2 != null && preReq1.equals(preReq2)) {
+                    showPopup(AlertType.ERROR, "Please select different courses for prerequisites");
+                    return;
+                }
+                if (preReq1 != null && preReq3 != null && preReq1.equals(preReq3)) {
+                    showPopup(AlertType.ERROR, "Please select different courses for prerequisites");
+                    return;
+                }
+                if (preReq2 != null && preReq3 != null && preReq2.equals(preReq3)) {
+                    showPopup(AlertType.ERROR, "Please select different courses for prerequisites");
+                    return;
+                }
+        
                 HashSet<String> preReqSet = new HashSet<>();
-
+        
                 if (preReq1 != null) {
                     preReqSet.add(preReq1.getCode());
                 }
@@ -379,6 +393,7 @@ public class GUI extends Application {
                     preCredit = Integer.parseInt(preCreditField.getText().trim());
                     Set<String> preReq = new HashSet<>(preReqSet);
                     if (Main.createCourse(code, credit, preCredit, preReq)) {
+                        Admin.createCourse(code, credit, preCredit, preReq1, preReq2, preReq3); // Call to Admin.createCourse
                         System.out.println(Main.listCourses);
                         showPopup(AlertType.INFORMATION, "Course Created");
                     } else {
@@ -387,7 +402,7 @@ public class GUI extends Application {
                 } catch (NumberFormatException ex) {
                     showPopup(AlertType.ERROR, "Credit and Pre-requisite Hour need to be int");
                 }
-
+        
                 codeField.clear();
                 creditField.clear();
                 preCreditField.clear();
